@@ -35,7 +35,7 @@ class ApiManager extends DecisionManagerAbstract
         try {
             $headers = $this->buildHeader($visitor->getConfig()->getApiKey());
             $this->httpClient->setHeaders($headers);
-            $this->httpClient->setTimeout($visitor->getConfig()->getTimeout());
+            $this->httpClient->setTimeout($visitor->getConfig()->getTimeout() / 1000);
             $url = $this->buildDecisionApiUrl($visitor->getConfig()->getEnvId() . '/' .
                 FlagshipConstant::URL_CAMPAIGNS . '/');
 
@@ -45,7 +45,7 @@ class ApiManager extends DecisionManagerAbstract
                 "context" => $visitor->getContext()
             ];
 
-            $response = $this->httpClient->post($url, [FlagshipConstant::EXPOSE_ALL_KEYS => true], $postData);
+            $response = $this->httpClient->post($url, [FlagshipConstant::EXPOSE_ALL_KEYS => "true"], $postData);
             $body = $response->getBody();
             $hasPanicMode = !empty($body["panic"]);
 

@@ -34,7 +34,7 @@ class EnvController extends Controller
             ]);
 
             $config = new FlagshipConfig($data['environment_id'], $data["api_key"]);
-            $config->setTimeout($data['timeout'] / 1000);
+            $config->setTimeout($data['timeout']);
 
             $request->session()->start();
 
@@ -55,11 +55,9 @@ class EnvController extends Controller
     private function getEnvJson($config)
     {
         return [
-            'data' => [
                 "environment_id" => $config->getEnvId(),
                 "api_key" => $config->getApiKey(),
-                "timeout" => $config->getTimeOut() * 1000
-            ]
+                "timeout" => $config->getTimeOut()
         ];
     }
 }
